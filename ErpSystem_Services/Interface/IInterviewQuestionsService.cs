@@ -13,10 +13,10 @@ namespace ErpSystem_Services.Interface
         void UpdateInterviewQuestion(InterviewQuestionsModel interviewQuestion);
         void DeleteInterviewQuestion(int interviewQuestionId);
         void RestoreInterviewQuestion(int InterviewQuestionId);
-        List<InterviewQuestionsModel> GetAllInterviewQuestions();
-        InterviewQuestionsModel GetInterviewQuestionById(int InterviewQuestionId);
-        TopicWiseInterviewQuestionsModel GetTopicWiseInterviewQuestions(int topicId);
-        InterviewQuestionsModel GetContentWiseInterViewQuestion(int contentId);
+       Task < List<InterviewQuestionsModel>> GetAllInterviewQuestions();
+      Task < InterviewQuestionsModel> GetInterviewQuestionById(int InterviewQuestionId);
+     Task <List< TopicWiseInterviewQuestionsModel>> GetTopicWiseInterviewQuestions(int topicId);
+    Task < List< InterviewQuestionsModel>> GetContentWiseInterViewQuestion(int contentId);
 
     }
 }

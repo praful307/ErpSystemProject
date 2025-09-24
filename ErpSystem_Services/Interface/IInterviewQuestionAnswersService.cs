@@ -13,9 +13,9 @@ namespace ErpSystem_Services.Interface
         void UpdateInterviewQuestionAnswer(InterviewQuestionAnswersModel interviewQuestionAnswer);
         void DeleteInterviewQuestionAnswer(int answerId);
         void RetoreInterviewQuestionAnswer(int answerId);
-        List<InterviewQuestionAnswersModel> GetAllInterviewQuestionAnswers();
-        InterviewQuestionAnswersModel GetInterviewQuestionAnswerById(int answerId);
-        InterviewQuestionsModel GetInterviewAnswerByQuestionId(int  questionId);
+       Task <List<InterviewQuestionAnswersModel>> GetAllInterviewQuestionAnswers();
+      Task <InterviewQuestionAnswersModel> GetInterviewQuestionAnswerById(int answerId);
+      Task < List< InterviewQuestionAnswersModel>> GetInterviewAnswerByQuestionId(int  questionId);
 
     }
 }

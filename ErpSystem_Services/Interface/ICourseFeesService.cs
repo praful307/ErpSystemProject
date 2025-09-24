@@ -13,8 +13,8 @@ namespace ErpSystem_Services.Interface
         void UdpateCourses(CourseFeesModel fees);
             void DeleteCourseFees(int feesId);
         void RestoreCourseFees(int feesId);
-        List<CourseFeesModel> GetAllCoursesFees();
-        CourseFeesModel GetCourseFeesById(int feesId);
-        CourseFeesModel GetCourseFeesbyCourseId(int courseId);
+        Task<List<CourseFeesModel>> GetAllCoursesFees();
+       Task<CourseFeesModel> GetCourseFeesById(int feesId);
+       Task<CourseFeesModel> GetCourseWiseFees(int courseId);
     }
 }

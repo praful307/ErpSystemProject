@@ -13,8 +13,8 @@ namespace ErpSystem_Services.Interface
         void UpdateCourseTopic(CourseTopicsModel courseTopic);
         void DeleteCourseTopic(int courseTopicId);
         void RestoreCourseTopic(int courseTopicId);
-        List<CourseTopicsModel> GetCourseTopics();
-        CourseTopicsModel GetCourseTopicById(int courseTopicId);
-        CourseWiseTopicAndContentsModel GetTopicAndContentByCourseId(int courseId);
+      Task< List<CourseTopicsModel>> GetCourseTopics();
+    Task <CourseTopicsModel >GetCourseTopicById(int courseTopicId);
+       Task <ContentModel> GetTopicAndContentByCourseId(int courseId);
     }
 }

@@ -13,8 +13,9 @@ namespace ErpSystem_Services.Interface
         void UdpdateTopicContent(TopicContentsModel topiContent);
         void DeleteTopicContent(int contentId);
         void RestoreTopiContent(int contentId);
-        List<TopicContentsModel> GetAllTopicContent();
-        TopicContentsModel GetTopicContentById(int contentId);
-        CourseWiseContentModel GetContentByCourseId(int courseId);
+       Task<List<TopicContentsModel>> GetAllTopicContents();
+       Task< TopicContentsModel> GetTopicContentById(int contentId);
+        Task< List<ContentModel>> GetContentsByCourseId(int courseId);
+        Task< List<ContentModel>> TopciWiseContents(int topicId);
     }
 }

@@ -70,11 +70,11 @@ namespace ErpSystem_Services.Implementation
                     lst.Add(cs);
 
                 }
-         
-               
+                return lst;
+
 
             }
-            return lst;
+        
         }
 
         public CoursesModel GetCourseById(int courseId)

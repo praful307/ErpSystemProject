@@ -13,9 +13,9 @@ namespace ErpSystem_Services.Interface
         void UpdateContentMcqsQuestions(ContentMcqsQuestionsModel mcqsQuestions);
         void DeleteContentMcqsQuestions(int mcqsQuestionId);
         void RestoreContentMcqsQuestions(int mcqsQuestionId);
-        List<ContentMcqsQuestionsModel> GetAllContentMcqsQuestions();
-        ContentMcqsQuestionsModel GetMcqsQuestionsById(int mcqsQuestionId);
-        ContentMcqsQuestionsModel GetContentWiseMcqsQuestion(int contentId);
-        TopicWiseInterviewQuestionsModel GetTopicWiseInterviewQuestionsById(int topicId);
+      Task < List<ContentMcqsQuestionsModel>> GetAllContentMcqsQuestions();
+      Task<  ContentMcqsQuestionsModel> GetMcqsQuestionsById(int mcqsQuestionId);
+       Task <List <ContentMcqsQuestionsModel>> GetContentWiseMcqsQuestion(int contentId);
+        List< TopicWiseInterviewQuestionsModel> GetTopicWiseInterviewQuestionsById(int topicId);
     }
 }

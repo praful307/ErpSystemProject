@@ -10,7 +10,7 @@ namespace ErpSystem_Models
     {
         public int AnswerId { get; set; }
         public int InterviewQuestionId { get; set; }
-        public string InterviewQuestionQuestion { get; set; }
+        public string InterviewQuestion { get; set; }
         public string QuestionExplaintion { get; set; }
 
         public string InterviewAnswers { get; set; }

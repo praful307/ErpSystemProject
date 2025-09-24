@@ -15,8 +15,8 @@ namespace ErpSystem_Services.Interface
         void RestoreContentProgramQuestion(int programQuestionId);
         List<ContentProgramQuestionsModel> GetAllContentProgramQuestions();
         ContentProgramQuestionsModel GetContentProgramQuestionById(int programQuestionId);
-        ContentProgramQuestionsModel GetProgramingQuestionsContentId(int contentId);
-        TopicWiseProgramQuestionsModel GetProgramingQuestionsTopictId(int topicId);
+      Task <List< ContentProgramQuestionsModel>> GetProgramingQuestionsContentId(int contentId);
+        TopicWiseProgramQuestionsModel GetProgramingQuestionsByTopictId(int topicId);
 
     }
 }

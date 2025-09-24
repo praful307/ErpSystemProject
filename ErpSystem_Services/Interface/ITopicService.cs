@@ -13,9 +13,9 @@ namespace ErpSystem_Services.Interface
         void UpdateTopic(TopicsModel topic);
         void DeleteTopic(int topicId);
         void RestoreTopic(int topicId);
-        List<TopicsModel> GetAllTopics();
-        TopicsModel GetCourseById(int courseId);
-        CourseWiseTopicModel GetTopicByCourseId(int courseId);
+        Task<List<TopicsModel>> GetAllTopics();
+      Task< List<ContentModel>> GetCourseWiseTopics(int courseId);
+       
 
     }
 }
