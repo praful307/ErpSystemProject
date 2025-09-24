@@ -15,5 +15,6 @@ namespace ErpSystem_Services.Interface
         void RestoreTopiContent(int contentId);
         List<TopicContentsModel> GetAllTopicContent();
         TopicContentsModel GetTopicContentById(int contentId);
+        CourseWiseContentModel GetContentByCourseId(int courseId);
     }
 }

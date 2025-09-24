@@ -15,5 +15,6 @@ namespace ErpSystem_Services.Interface
         void RestoreCourseFees(int feesId);
         List<CourseFeesModel> GetAllCoursesFees();
         CourseFeesModel GetCourseFeesById(int feesId);
+        CourseFeesModel GetCourseFeesbyCourseId(int courseId);
     }
 }
