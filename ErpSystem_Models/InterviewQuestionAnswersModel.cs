@@ -8,10 +8,16 @@ namespace ErpSystem_Models
 {
     public class InterviewQuestionAnswersModel
     {
-        public int InterviewQuestionAnswerId { get; set; }
+        public int AnswerId { get; set; }
         public int InterviewQuestionId { get; set; }
-        public string Answer { get; set; } = null!;
+        public string InterviewQuestionQuestion { get; set; }
+        public string QuestionExplaintion { get; set; }
+
+        public string InterviewAnswers { get; set; }
+        public string AnswerExplaintion{ get; set; }
+
+
         public int Flag { get; set; }
-        public virtual InterviewQuestionsModel InterviewQuestion { get; set; } 
+      
     }
 }

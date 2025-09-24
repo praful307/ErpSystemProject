@@ -13,7 +13,9 @@ namespace ErpSystem_Models
         public string VideoDescription { get; set; } = null!;
         public string VideoUrl { get; set; } = null!;
         public int ContentId { get; set; }
+        public string ContentName { get; set; }
+        public string ContentDescription{ get; set; }
         public int Flag { get; set; }
-        public virtual TopicContentsModel Contents { get; set; } 
+    
     }
 }

@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace ErpSystem_Models
 {
-    public class ProgramQuestionAnswersModel
+    public class TopicWiseProgramQuestionsModel
     {
-        public int ProgramAnswerId { get; set; }
+        public int TopicId { get; set; }
+        public string TopicName { get; set; }
+        public int ContentId { get;set; }
+        public int ContentName { get;set; }
         public int ProgramQuestionId { get; set; }
         public string Question { get; set; }
-        public string Answer { get; set; } 
         public int Flag { get; set; }
-     
+ 
+       
     }
 }
