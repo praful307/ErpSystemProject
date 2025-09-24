@@ -13,8 +13,8 @@ namespace ErpSystem_Services.Interface
         void UpdatProgramingAnswers(ProgramQuestionAnswersModel programQuestionAnswers);
         void DeleteProgramingAnswers(int programAnswerId);
         void RestoreProgramingAnswers(int programAnswerId);
-        List<ProgramQuestionAnswersModel> GetAllProgramingAnswers();
-        ProgramQuestionAnswersModel GetProgramingAnswersById(int programAnswerId);
-        ProgramQuestionAnswersModel GetProgramingAnswersByProgramQuestionId(int programQuestionId);
+       Task <List<ProgramQuestionAnswersModel>> GetAllProgramingAnswers();
+      Task   < ProgramQuestionAnswersModel> GetProgramingAnswersById(int programAnswerId);
+       Task <List< ProgramQuestionAnswersModel>> GetProgramingAnswersByProgramQuestionId(int programQuestionId);
     }
 }

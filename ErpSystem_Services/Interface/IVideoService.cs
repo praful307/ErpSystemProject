@@ -14,7 +14,9 @@ namespace ErpSystem_Services.Interface
         void UpdateVideo(VideoModel video);
         void DeleteVideo(int videoId);
         void RestoreVideo(int videoId);
-        List<VideoModel> GetAllVideos();
-        VideoModel GetVideoById(int videoId);
+      Task  <List<VideoModel>> GetAllVideos();
+      Task  <VideoModel> GetVideoById(int videoId);
+      Task <List <VideoModel>> GetContentWiseVideo(int contentId);
+      Task <List <VideoModel>> GetTopicWiceVideo(int topicId);
     }
 }
