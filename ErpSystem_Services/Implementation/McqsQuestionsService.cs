@@ -108,36 +108,38 @@ namespace ErpSystem_Services.Implementation
 
         public Task<ContentMcqsQuestionsModel> GetMcqsQuestionsById(int mcqsQuestionId)
         {
-            con.Close();
-            ContentMcqsQuestionsModel contentquetion = null;
-            con.Open();
-            using(SqlCommand cmd= new SqlCommand("sp_FetchContentMcqsQuestions",con))
-            {
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("McqsQuestionId", mcqsQuestionId);
-                SqlDataReader dr = cmd.ExecuteNonQuery();
-                while(dr.Read())
-                {
+            //    con.Close();
+            //    ContentMcqsQuestionsModel contentquetion = null;
+            //    con.Open();
+            //    using(SqlCommand cmd= new SqlCommand("sp_FetchContentMcqsQuestions",con))
+            //    {
+            //        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            //        cmd.Parameters.AddWithValue("McqsQuestionId", mcqsQuestionId);
+            //        SqlDataReader dr = cmd.ExecuteNonQuery();
+            //        while(dr.Read())
+            //        {
 
-                    contentquetion = new ContentMcqsQuestionsModel()
-                    {
+            //            contentquetion = new ContentMcqsQuestionsModel()
+            //            {
 
-                        ContentId = Convert.ToInt32(dr["ContentId"].ToString()),
-                        ContentName = dr["ContentName"].ToString(),
-                        McqsQuestionId = Convert.ToInt32(dr["InterviewQuestionId"].ToString()),
-                        Question = dr["Question"].ToString(),
-                        OptionA = dr["OptionA"].ToString(),
-                        OptionB = dr["OptionB"].ToString(),
-                        OptionC = dr["OptionC"].ToString(),
-                        OptionD = dr["OptionD"].ToString(),
-                        CorrectAnswer = Convert.ToInt32(dr["CorrectAnswer"].ToString())
+            //                ContentId = Convert.ToInt32(dr["ContentId"].ToString()),
+            //                ContentName = dr["ContentName"].ToString(),
+            //                McqsQuestionId = Convert.ToInt32(dr["InterviewQuestionId"].ToString()),
+            //                Question = dr["Question"].ToString(),
+            //                OptionA = dr["OptionA"].ToString(),
+            //                OptionB = dr["OptionB"].ToString(),
+            //                OptionC = dr["OptionC"].ToString(),
+            //                OptionD = dr["OptionD"].ToString(),
+            //                CorrectAnswer = Convert.ToInt32(dr["CorrectAnswer"].ToString())
 
-                    };
+            //            };
 
-                }
-            }
+            //        }
+            //    }
 
-            return Task.FromResult(contentquetion);
+            //    return Task.FromResult(contentquetion);
+
+            throw new NotImplementedException();
         }
 
         public Task<List<ContentMcqsQuestionsModel>> GetTopicWiseInterviewQuestionsById(int topicId)
