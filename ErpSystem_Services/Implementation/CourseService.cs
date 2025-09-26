@@ -10,128 +10,134 @@ using System.Threading.Tasks;
 
 namespace ErpSystem_Services.Implementation
 {
-    internal class CourseService : ICourseService
+    public class CourseService : ICourseService
     {
         public void AddCourse(CoursesModel courses)
         {
-            using(SqlConnection con= new SqlConnection(ConnectionString.Connection))
+            using (SqlConnection con = new SqlConnection(ConnectionString.Connection))
             {
-
                 con.Open();
                 SqlCommand cmd = new SqlCommand("sp_Courses", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Action", "insert");
                 cmd.Parameters.AddWithValue("@CourseId", courses.CourseId);
                 cmd.Parameters.AddWithValue("@CourseName", courses.CourseName);
+                cmd.Parameters.AddWithValue("@@CourseCode", courses.CourseCode);
                 cmd.Parameters.AddWithValue("@Description", courses.CourseDescription);
-                int cnt= cmd.ExecuteNonQuery();
+                int cnt = cmd.ExecuteNonQuery();
             }
         }
 
         public void DeleteCourse(int courseId)
         {
-             using(SqlConnection con= new SqlConnection(ConnectionString.Connection))
+            using (SqlConnection con = new SqlConnection(ConnectionString.Connection))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("sp_Courses", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Action", "delete");
-                cmd.Parameters.AddWithValue("@CourseId", courseId);
-                cmd.Parameters.AddWithValue("@CourseName", "");
-                cmd.Parameters.AddWithValue("@Description", "");
-                int cnt= cmd.ExecuteNonQuery();
+                using (SqlCommand cmd = new SqlCommand("sp_Courses", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Action", "delete");
+                    cmd.Parameters.AddWithValue("@CourseId", courseId);
+
+                    cmd.ExecuteNonQuery();
+                }
             }
-
-
         }
 
-        public List<CoursesModel> GetAllCourses()
+        public Task<List<CoursesModel>> GetAllCourses()
         {
             List<CoursesModel> lst = new List<CoursesModel>();
-             using(SqlConnection con= new SqlConnection(ConnectionString.Connection))
+            using (SqlConnection con = new SqlConnection(ConnectionString.Connection))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("sp_FetchCourse", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@CourseId", 0);
-                SqlDataReader dr = cmd.ExecuteReader();
-                    while(dr.Read())
+                using (SqlCommand cmd = new SqlCommand("sp_FetchCourse", con))
                 {
-                    int cid = Convert.ToInt32(dr["CourseId"].ToString());
-                    string cname = dr["CourseName"].ToString();
-                    string d = dr["Description"].ToString();
-                    CoursesModel cs = new CoursesModel()
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@CourseId", 0);
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-
-                        CourseId = cid,
-                        CourseName = cname,
-                        CourseDescription = d
-                    };
-                    lst.Add(cs);
-
+                        while (dr.Read())
+                        {
+                            CoursesModel cs = new CoursesModel()
+                            {
+                                CourseId = Convert.ToInt32(dr["CourseId"]),
+                                CourseName = dr["CourseName"].ToString(),
+                                CourseCode = dr["CourseCode"].ToString(),
+                                CourseDescription = dr["Description"].ToString()
+                            };
+                            lst.Add(cs);
+                        }
+                    }
                 }
-                return lst;
-
-
             }
-        
+
+            // Wrap the result in a completed task
+            return Task.FromResult(lst);
         }
 
-        public CoursesModel GetCourseById(int courseId)
+
+        public Task<CoursesModel> GetCourseById(int courseId)
         {
             CoursesModel course = null;
-            using(SqlConnection con=  new SqlConnection(ConnectionString.Connection))
+
+            using (SqlConnection con = new SqlConnection(ConnectionString.Connection))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("sp_FetchCourse", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@CourseId", courseId);
-                SqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
+                using (SqlCommand cmd = new SqlCommand("sp_FetchCourse", con))
                 {
-                    int cid = Convert.ToInt32(dr["CourseId"].ToString());
-                    string cname = dr["CourseName"].ToString();
-                    string d = dr["Description"].ToString();
-                    course = new CoursesModel()
-                    {
-                        CourseId = cid,
-                        CourseName = cname,
-                        CourseDescription = d
-                    };
-                    
-                    
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@CourseId", courseId);
 
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read()) // only one record expected
+                        {
+                            course = new CoursesModel()
+                            {
+                                CourseId = Convert.ToInt32(dr["CourseId"].ToString()),
+                                CourseName = dr["CourseName"].ToString(),
+                                CourseCode= dr["CourseCode"].ToString(),
+                                CourseDescription = dr["Description"].ToString()
+                            };
+                        }
+                    }
                 }
-                return course;
             }
+
+            return Task.FromResult(course);
         }
+
 
         public void RestoreCourse(int courseId)
         {
             using (SqlConnection con = new SqlConnection(ConnectionString.Connection))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("sp_Courses", con);
+                using (SqlCommand cmd = new SqlCommand("sp_Courses", con))
+                {
                     cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Action", "restore");
-                cmd.Parameters.AddWithValue("@CourseId", courseId);
-                cmd.Parameters.AddWithValue("@CourseName", "");
-                cmd.Parameters.AddWithValue("@Description", "");
-                int cnt = cmd.ExecuteNonQuery();
-            }    
+                    cmd.Parameters.AddWithValue("@Action", "restore");
+                    cmd.Parameters.AddWithValue("@CourseId", courseId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public void UpdateCourse(CoursesModel courses)
         {
-           using(SqlConnection con= new SqlConnection(ConnectionString.Connection))
+            using (SqlConnection con = new SqlConnection(ConnectionString.Connection))
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand("sp_Courses", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Action", "update");
-                    cmd.Parameters.AddWithValue("@CourseId", courses.CourseId);
+                cmd.Parameters.AddWithValue("@CourseId", courses.CourseId);
                 cmd.Parameters.AddWithValue("@CourseName", courses.CourseName);
+                cmd.Parameters.AddWithValue("@CourseCode", courses.CourseCode);
                 cmd.Parameters.AddWithValue("@Description", courses.CourseDescription);
+                int cnt = cmd.ExecuteNonQuery();
             }
         }
     }

@@ -10,6 +10,7 @@ namespace ErpSystem_Models
     {
        public int CourseId { get; set; }
         public string CourseName { get; set; }
+        public string CourseCode { get; set; }
         public string CourseDescription { get; set; }
         public int Flag { get; set; }
     }

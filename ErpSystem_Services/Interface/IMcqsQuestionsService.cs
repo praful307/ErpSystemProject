@@ -16,6 +16,6 @@ namespace ErpSystem_Services.Interface
       Task < List<ContentMcqsQuestionsModel>> GetAllContentMcqsQuestions();
       Task<  ContentMcqsQuestionsModel> GetMcqsQuestionsById(int mcqsQuestionId);
        Task <List <ContentMcqsQuestionsModel>> GetContentWiseMcqsQuestion(int contentId);
-        List< TopicWiseInterviewQuestionsModel> GetTopicWiseInterviewQuestionsById(int topicId);
+       Task< List<ContentMcqsQuestionsModel>> GetTopicWiseInterviewQuestionsById(int topicId);
     }
 }

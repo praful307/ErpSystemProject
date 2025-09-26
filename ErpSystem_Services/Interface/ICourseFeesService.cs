@@ -15,6 +15,6 @@ namespace ErpSystem_Services.Interface
         void RestoreCourseFees(int feesId);
         Task<List<CourseFeesModel>> GetAllCoursesFees();
        Task<CourseFeesModel> GetCourseFeesById(int feesId);
-       Task<CourseFeesModel> GetCourseWiseFees(int courseId);
+       //Task<CourseFeesModel> GetCourseWiseFees(int courseId);
     }
 }
