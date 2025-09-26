@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq   
+using System.Linq;   
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +20,7 @@ namespace ErpSystem_Models
         public string OptionB { get; set; } = null!;
         public string OptionC { get; set; } = null!;
         public string OptionD { get; set; } = null!;
-        public int CorrectAnswer { get; set; } = null!;
+        public int CorrectAnswer { get; set; }
         public string AnswerExplaination { get; set; } = null!;
         public int Flag { get; set; }
       

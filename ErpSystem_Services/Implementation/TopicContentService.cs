@@ -131,7 +131,7 @@ namespace ErpSystem_Services.Implementation
 
                 }
             }
-            return contents;
+            return  Task.FromResult( contents);
         }
 
         public void RestoreTopiContent(int contentId)
