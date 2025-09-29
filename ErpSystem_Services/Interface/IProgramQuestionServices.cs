@@ -9,14 +9,14 @@ namespace ErpSystem_Services.Interface
 {
     public interface IProgramQuestionServices
     {
-        void AddContentProgramQuestion(ContentProgramQuestionsModel programQuestion);
-        void UpdateContentProgramQuestion(ContentProgramQuestionsModel programQuestion);
+        void AddContentProgramQuestion(TopicAndContentWiseProgramQuestionsModel programQuestion);
+        void UpdateContentProgramQuestion(TopicAndContentWiseProgramQuestionsModel programQuestion);
         void DeleteContentProgramQuestion(int programQuestionId);
         void RestoreContentProgramQuestion(int programQuestionId);
-       Task <List<ContentProgramQuestionsModel>> GetAllContentProgramQuestions();
-       Task <ContentProgramQuestionsModel> GetContentProgramQuestionById(int programQuestionId);
-      Task <List< ContentProgramQuestionsModel>> GetProgramingQuestionsContentId(int contentId);
-     Task < List <TopicWiseProgramQuestionsModel>> GetProgramingQuestionsByTopictId(int topicId);
+       Task <List<TopicAndContentWiseProgramQuestionsModel>> GetAllContentProgramQuestions();
+       Task <TopicAndContentWiseProgramQuestionsModel> GetContentProgramQuestionById(int programQuestionId);
+      Task <List<TopicAndContentWiseProgramQuestionsModel>> GetProgramingQuestionsContentId(int contentId);
+     Task < List <TopicAndContentWiseProgramQuestionsModel>> GetProgramingQuestionsByTopictId(int topicId);
 
     }
 }

@@ -9,14 +9,14 @@ namespace ErpSystem_Services.Interface
 {
     public interface IInterviewQuestionsService
     {
-        void AddInterviewQuestion(InterviewQuestionsModel interviewQuestion);
-        void UpdateInterviewQuestion(InterviewQuestionsModel interviewQuestion);
+        void AddInterviewQuestion(TopicAndContentWiseInterviewQuestionsModel interviewQuestion);
+        void UpdateInterviewQuestion(TopicAndContentWiseInterviewQuestionsModel interviewQuestion);
         void DeleteInterviewQuestion(int interviewQuestionId);
         void RestoreInterviewQuestion(int InterviewQuestionId);
-       Task < List<InterviewQuestionsModel>> GetAllInterviewQuestions();
-      Task < InterviewQuestionsModel> GetInterviewQuestionById(int InterviewQuestionId);
-     Task <List< TopicWiseInterviewQuestionsModel>> GetTopicWiseInterviewQuestions(int topicId);
-    Task < List< InterviewQuestionsModel>> GetContentWiseInterViewQuestion(int contentId);
+       Task < List<TopicAndContentWiseInterviewQuestionsModel>> GetAllInterviewQuestions();
+      Task <TopicAndContentWiseInterviewQuestionsModel> GetInterviewQuestionById(int InterviewQuestionId);
+     Task <List< TopicAndContentWiseInterviewQuestionsModel>> GetTopicWiseInterviewQuestions(int topicId);
+    Task < List<TopicAndContentWiseInterviewQuestionsModel>> GetContentWiseInterViewQuestion(int contentId);
 
     }
 }

@@ -9,13 +9,13 @@ namespace ErpSystem_Services.Interface
 {
     public interface IMcqsQuestionsService
     {
-        void AddContentMcqsQuestions(ContentMcqsQuestionsModel mcqsQuestions);
-        void UpdateContentMcqsQuestions(ContentMcqsQuestionsModel mcqsQuestions);
+        void AddContentMcqsQuestions(TopicAndContentWiseMcqsQuestionsModel mcqsQuestions);
+        void UpdateContentMcqsQuestions(TopicAndContentWiseMcqsQuestionsModel mcqsQuestions);
         void DeleteContentMcqsQuestions(int mcqsQuestionId);
         void RestoreContentMcqsQuestions(int mcqsQuestionId);
-      Task < List<ContentMcqsQuestionsModel>> GetAllContentMcqsQuestions();
-      Task<  ContentMcqsQuestionsModel> GetMcqsQuestionsById(int mcqsQuestionId);
-       Task <List <ContentMcqsQuestionsModel>> GetContentWiseMcqsQuestion(int contentId);
-       Task< List<ContentMcqsQuestionsModel>> GetTopicWiseInterviewQuestionsById(int topicId);
+      Task < List<TopicAndContentWiseMcqsQuestionsModel>> GetAllContentMcqsQuestions();
+      Task<TopicAndContentWiseMcqsQuestionsModel> GetMcqsQuestionsById(int mcqsQuestionId);
+       Task <List <TopicAndContentWiseMcqsQuestionsModel>> GetContentWiseMcqsQuestion(int contentId);
+       Task< List<TopicAndContentWiseMcqsQuestionsModel>> GetTopicWiseInterviewQuestionsById(int topicId);
     }
 }

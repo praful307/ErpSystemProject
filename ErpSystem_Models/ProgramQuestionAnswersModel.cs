@@ -11,7 +11,7 @@ namespace ErpSystem_Models
         public int ProgramAnswerId { get; set; }
         public int ProgramQuestionId { get; set; }
         public string Question { get; set; }
-        public string Answer { get; set; } 
+        public string ProgramingAnswer { get; set; } 
         public int Flag { get; set; }
      
     }

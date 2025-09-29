@@ -15,7 +15,7 @@ namespace ErpSystem_Services.Interface
         void RetoreInterviewQuestionAnswer(int answerId);
        Task <List<InterviewQuestionAnswersModel>> GetAllInterviewQuestionAnswers();
       Task <InterviewQuestionAnswersModel> GetInterviewQuestionAnswerById(int answerId);
-      Task < List< InterviewQuestionAnswersModel>> GetInterviewAnswerByQuestionId(int  questionId);
+      Task < List< InterviewQuestionAnswersModel>> GetInterviewAnswerByQuestionId(int interviewQuestionId);
 
     }
 }
