@@ -17,6 +17,7 @@ namespace ErpSystem_Models
         public int ContentId { get; set; }
         public string ContentName { get; set; }
         public string ContentDescription { get; set; }
+        public int CourseTopicId { get; set; }
         public int Flag { get; set; }
     }
 }

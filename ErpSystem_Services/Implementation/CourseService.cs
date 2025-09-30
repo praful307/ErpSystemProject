@@ -22,9 +22,10 @@ namespace ErpSystem_Services.Implementation
                 cmd.Parameters.AddWithValue("@Action", "insert");
                 cmd.Parameters.AddWithValue("@CourseId", courses.CourseId);
                 cmd.Parameters.AddWithValue("@CourseName", courses.CourseName);
-                cmd.Parameters.AddWithValue("@@CourseCode", courses.CourseCode);
-                cmd.Parameters.AddWithValue("@Description", courses.CourseDescription);
-                int cnt = cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@CourseCode", courses.CourseCode);
+                cmd.Parameters.AddWithValue("@Description", courses.Description);
+              
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -44,7 +45,7 @@ namespace ErpSystem_Services.Implementation
             }
         }
 
-        public Task<List<CoursesModel>> GetAllCourses()
+        public List<CoursesModel> GetAllCourses()
         {
             List<CoursesModel> lst = new List<CoursesModel>();
             using (SqlConnection con = new SqlConnection(ConnectionString.Connection))
@@ -53,7 +54,7 @@ namespace ErpSystem_Services.Implementation
                 using (SqlCommand cmd = new SqlCommand("sp_FetchCourse", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@CourseId", 0);
+                    cmd.Parameters.AddWithValue("@CourseId", 1);
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -61,10 +62,10 @@ namespace ErpSystem_Services.Implementation
                         {
                             CoursesModel cs = new CoursesModel()
                             {
-                                CourseId = Convert.ToInt32(dr["CourseId"]),
+                                CourseId = Convert.ToInt32(dr["CourseId"].ToString()),
                                 CourseName = dr["CourseName"].ToString(),
                                 CourseCode = dr["CourseCode"].ToString(),
-                                CourseDescription = dr["Description"].ToString()
+                                Description = dr["CoursesDesription"].ToString()
                             };
                             lst.Add(cs);
                         }
@@ -73,7 +74,7 @@ namespace ErpSystem_Services.Implementation
             }
 
             // Wrap the result in a completed task
-            return Task.FromResult(lst);
+            return lst;
         }
 
 
@@ -98,7 +99,7 @@ namespace ErpSystem_Services.Implementation
                                 CourseId = Convert.ToInt32(dr["CourseId"].ToString()),
                                 CourseName = dr["CourseName"].ToString(),
                                 CourseCode= dr["CourseCode"].ToString(),
-                                CourseDescription = dr["Description"].ToString()
+                                Description = dr["Description"].ToString()
                             };
                         }
                     }
@@ -136,7 +137,7 @@ namespace ErpSystem_Services.Implementation
                 cmd.Parameters.AddWithValue("@CourseId", courses.CourseId);
                 cmd.Parameters.AddWithValue("@CourseName", courses.CourseName);
                 cmd.Parameters.AddWithValue("@CourseCode", courses.CourseCode);
-                cmd.Parameters.AddWithValue("@Description", courses.CourseDescription);
+                cmd.Parameters.AddWithValue("@Description", courses.Description);
                 int cnt = cmd.ExecuteNonQuery();
             }
         }

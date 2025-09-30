@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/DeveloperLayout.cshtml";
+}
+<h3>Add Training Course</h3>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+              
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                  
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                              @Html.Hidden("txtid")
+                                <label class="form-label" style="color:darkblue">Course </label>
+                             
+                                @Html.TextBox("txtname", null, new { @class = "form-control", placeholder = "Enter Course Name" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" style="color:darkblue"> Course Code</label>
+                              
+                                @Html.TextBox("txtcode", null, new { @class = "form-control", placeholder = "Enter Course Name"})
+                            </div>
+                        </div>
+                    
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" style="color:darkblue"> Description</label>
+                           
+                            @Html.TextArea("txtdes", null, new { @class = "form-control", placeholder = "Enter Description"})
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <input type="button" value="Submit" class="btn btn-primary" onclick="AddCourse()" />
+
+                </div>
+                
+
+            </div>
+
+        </div>
+     
+
+    </div>
+
+</div>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sr.No</th>
+                <th>Course </th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="tbldata">
+
+        </tbody>
+
+    </table>
+</div>
+<script>
+    const AddCourse= async()=>{
+        debugger;
+        var st={
+            "CourseName": document.getElementById("txtname").value,
+            "CourseCode": document.getElementById("txtcode").value,
+            "Description": document.getElementById("txtdes").value
+        }
+          const url = '@Url.Action("AddCourse", "Course", new { area = "Developer" })';
+        const response= await fetch(url,{
+            method:'post',
+          
+            body:JSON.stringify(st),
+            headers: {
+                'content-type': 'application/json' 
+            }
+  
+        });
+        const result= await response.json();
+        alert("Course Added Successfully");
+        window.location.reload();
+        Display();
+    }
+    const Display=async()=>{
+
+        const response=await fetch("/Developer/Course/GetCourses");
+        const co= await response.json();
+        console.log(co);
+        // var data="";
+        // co.froEach(function(d,k){
+        //     data+="<tr><td>"()"</td></tr>"
+        // })
+    }
+
+    Display();
+</script>

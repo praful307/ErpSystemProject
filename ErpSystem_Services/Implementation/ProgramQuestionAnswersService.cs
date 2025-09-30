@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ErpSystem_Services.Implementation
 {
-    internal class ProgramQuestionAnswersService : IProgramQuestionAnswersService
+    public class ProgramQuestionAnswersService : IProgramQuestionAnswersService
     {
         SqlConnection con = new SqlConnection(ConnectionString.Connection);
         public void AddProgramingAnswers(ProgramQuestionAnswersModel programQuestionAnswers)

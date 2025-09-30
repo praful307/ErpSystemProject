@@ -8,6 +8,6 @@ namespace ErpSystem_Models
 {
     public class ConnectionString
     {
-            public static string Connection= "Serevr=DESKTOP-VJEMP9D\\SQLEXPRESS;Database=ERPSystemDB;Trusted_Connection=True;TrustCertificate=True";
+            public static string Connection= "Server=DESKTOP-VJEMP9D\\SQLEXPRESS;Database=ERPSystemDB;Trusted_Connection=True;TrustServerCertificate=True";
     }
 }

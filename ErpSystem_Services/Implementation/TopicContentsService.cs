@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ErpSystem_Services.Implementation
 {
-    public class TopicContentService : ITopicContentsService
+    public class TopicContentsService : ITopicContentsService
     {
         SqlConnection con = new SqlConnection(ConnectionString.Connection);
         public void AddTopicContent(TopicContentsModel topicContent)

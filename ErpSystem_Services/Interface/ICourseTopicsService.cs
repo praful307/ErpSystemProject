@@ -15,6 +15,6 @@ namespace ErpSystem_Services.Interface
         void RestoreCourseTopic(int courseTopicId);
       Task< List<CourseTopicsModel>> GetCourseTopics();
     Task <CourseTopicsModel >GetCourseTopicById(int courseTopicId);
-       Task <ContentModel> GetTopicAndContentByCourseId(int courseId);
+       Task<List<ContentModel>> GetTopicAndContentByCourseId(int courseId);
     }
 }
