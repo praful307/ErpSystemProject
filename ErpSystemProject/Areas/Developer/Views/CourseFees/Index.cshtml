@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/DeveloperLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-11">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center" style="color:darkblue">Add Course Fees</h3>
+                </div>
+                <div class="card-body">
+
+                    <!-- Course Dropdown -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label mb-1 fw-bold" style="color:darkblue;">Course:</label>
+                            <select id="ddcourse" class="form-select text-center">
+                                <option selected disabled>--Select Course--</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Course Details Row -->
+                    <div class="row g-3">
+                        <!-- g-3 adds spacing between columns -->
+                        <div class="col-md-3">
+                            <label class="form-label mb-1 fw-bold" style="color:darkblue;">Course Code:</label>
+                            <input type="text" class="form-control" />
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label mb-1 fw-bold" style="color:darkblue;">Amount:</label>
+                            <input type="text" class="form-control" />
+                        </div>
+
+                        <div class="col-md-3">
+                            <br />
+                            <label class="form-label mb-1 fw-bold" style="color:darkblue;">Mode:</label>
+                            <div class="form-check form-check-inline">
+                                @Html.RadioButton("rdmode", "Lumsum", new { @class = "form-check-input"})
+                                <label class="form-check-label" for="rdLumsum">Lumsum</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                @Html.RadioButton("rdmode", "Instolment", new { @class = "form-check-input" })
+                                <label class="form-check-label" for="rdInstolment">Instolment</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label mb-1 fw-bold" style="color:darkblue;">GST:</label>
+                            <input type="text" class="form-control" value="18%" disabled />
+                        </div>
+                    </div>
+
+                    <!-- Save Button -->
+                    <div class="row mt-4">
+                        <div class="col text-center">
+                            <button type="button" class="btn btn-info px-4 shadow-sm">Save</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

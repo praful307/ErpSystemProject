@@ -1,0 +1,176 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/DeveloperLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="card w-50 mx-auto">
+            <div class="card-header">
+                <h3 class="text-center" style="color:darkblue">Add Topic</h3>
+            </div>
+            <div class="card-body">
+       
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    @Html.Hidden("txttopicid")
+                    <label class="form-label mb-0" style="color:darkblue; width:70px;">Topic:</label>
+                    @Html.TextBox("txttopic", null, new { @class = "form-control", placeholder = "Enter Topic", style = "width:200px;" })
+                  
+                </div>
+
+            
+                <div class="d-flex align-items-center gap-2">
+                    <label class="form-label mb-0" style="color:darkblue; width:70px;">Description:</label>
+                    @Html.TextArea("txtdes", null, new { @class = "form-control", placeholder = "Enter Description", style = "width:300px; height:80px;" })
+                    <input type="button" value="Submit" class="btn btn-primary" id="btnsubmit" onclick="addtopic()" />
+                    <input type="button" value="Update" class="btn btn-info" id="btnupdate" onclick="updatetopic()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+&nbsp;
+<style>
+    .scroll-table {
+        max-height: 400px;
+        overflow-y: auto;
+        overflow-x: auto;
+        display: block;
+    }
+
+        .scroll-table table thead th {
+            position: sticky;
+            top: 0;
+            
+            color: darkblue;
+            z-index: 2;
+        }
+</style>
+
+<div class="scroll-table">
+    <table class="table table-bordered table-striped" style="min-width:800px;">
+        <thead>
+            <tr>
+                <th>Sr.No</th>
+                <th>Topic Name</th>        
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="tbldata">
+        </tbody>
+    </table>
+</div>
+
+            <script>
+//==============================Add Topic=====================================================
+    const addtopic=async()=>{
+  
+       var st={
+           "TopicName":  document.getElementById("txttopic").value,
+           "TopicDescription":document.getElementById("txtdes").value
+        
+       }
+       const response= await fetch("/Developer/Topic/AddTopic",{
+           method:'post',
+           body:JSON.stringify(st),
+           headers:{
+               "content-type":'application/json'
+           }
+       })
+       const topic = await response.json();
+  
+       displayData()
+       alert("Topic Added Successfully");
+       window.location.reload();
+    }
+    //=======================DisplayTopic================================
+    const displayData = async () => {
+        const response = await fetch("/Developer/Topic/GetTopic");
+        const dis = await response.json();
+ 
+        let data = "";
+        dis.forEach((d, k) => {
+            data += `<tr>
+                        <td>${k + 1}</td>
+                        <td>${d.topicName}</td>
+                        <td>${d.topicDescription}</td>
+                        <td>
+                            <input type='button' value='View' class='btn btn-info' onclick='EditData(${d.topicId})'/>
+                            &nbsp;
+                            <input type='button' value='Delete' class='btn btn-danger' onclick='DeleteData(${d.topicId})'/>
+                        </td>
+                     </tr>`;
+        });
+        document.getElementById("tbldata").innerHTML = data;
+    }
+
+
+    displayData();
+
+    //=========================EditTopic==============================
+    const EditData=async(id)=>{
+
+        const response = await fetch("/Developer/Topic/GetTopicByid/"+id);
+        const cous= await response.json();
+        document.getElementById("txttopicid").value=cous.topicId;
+        document.getElementById("txttopic").value=cous.topicName;
+        document.getElementById("txtdes").value=cous.topicDescription;
+                document.getElementById("btnupdate").removeAttribute("hidden");
+          document.getElementById("btnsubmit").setAttribute("hidden","hidden");
+
+    }
+
+
+    //=======================================UpdateTopic===========================
+    const  updatetopic=async()=>{
+        debugger;
+          var st={
+           "TopicId": document.getElementById("txttopicid").value,
+           "TopicName":  document.getElementById("txttopic").value,
+           "TopicDescription":document.getElementById("txtdes").value
+
+       }
+       const response= await fetch("/Developer/Topic/updateTopic",{
+           method:'post',
+           body:JSON.stringify(st),
+           headers:{
+               "content-type":'application/json'
+           }
+       })
+       const topic = await response.json();
+
+       displayData()
+       alert("Topic Update Successfully");
+       window.location.reload();
+    }
+
+    //==================================Delete Topic=====================================================
+
+            const DeleteData = async(id)=> {
+            if(confirm("Really want to delete topic")) {
+                    const response = await fetch("/Developer/Topic/DeleteTopic/"+id,{
+                    method:'post',
+                    headers:{
+                        'content-type':'application/json'
+                    }
+                });
+                const deleteco= await response.json();
+                         // displayData();
+                 alert("Topic Delete Successfully");
+                
+                window.location.reload();
+            }
+        }
+    //=======================================Clear Topic====================================================
+    const cleardata=()=>{
+
+        document.getElementById("txttopicid").value=""
+        document.getElementById("txttopic").value=""
+        document.getElementById("txtdes").value="";
+           document.getElementById("btnsubmit").removeAttribute("hidden");
+          document.getElementById("btnupdate").setAttribute("hidden","hidden");
+
+    }
+        cleardata();
+            </script>

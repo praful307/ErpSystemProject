@@ -1,0 +1,210 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/DeveloperLayout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center" style="color:darkblue">Add Topic Wise Content</h3>
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.Hidden("txtcontnetid",null)
+                                <label class="form-label mb-0" style="color:darkblue; width:70px;">Topic:</label>
+                                <select id="ddtopic" class="form-control text-xl-center" >
+                                    <option selected disabled>-- Select Topic--</option>
+                                </select>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label mb-0" style="color:darkblue; width:70px;">Content:</label>
+                                @Html.TextBox("txtcontent", null, new { @class = "form-control", placeholder = "Enter Content"})
+                               
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label class="form-label mb-0" style="color:darkblue; width:150px;">Content Description:</label>
+                                @Html.TextArea("txtdes", null, new { @class = "form-control", placeholder = "Enter Content" })
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-2">
+                              <br />
+                                <input type="button" value="Submit" class="btn btn-primary" id="btnsubmit" onclick="AddTopicContent()" />
+                                <input type="button" value="Update" class="btn btn-info" id="btnupdate" onclick="UpdateTopicContent()" />
+
+                            </div>
+
+
+                        </div>
+                    
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<br />
+<div class="scroll-table">
+    <table class="table table-bordered table-striped" style="min-width:800px;">
+        <thead>
+            <tr>
+                <th>Sr.No</th>
+                <th>Content Name</th>
+                <th>Topic Name</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="tbldata">
+        </tbody>
+    </table>
+</div>
+<script>
+          //===============================Update Content==================================
+       const UpdateTopicContent=async()=>{
+           debugger;
+              var st={
+              "ContentId":document.getElementById("txtcontnetid").value,
+              "TopicId":document.getElementById("ddtopic").value,
+              "ContentName":document.getElementById("txtcontent").value,
+              "ContentDescription":document.getElementById("txtdes").value
+              }
+                 const response= await fetch("/Developer/TopicContent/UpdateContnet",{
+              method:'post',
+              body:JSON.stringify(st),
+              headers:{
+                  'content-type':'application/json'
+              }
+          })
+          const content=  await response.json();
+
+          alert("Contnet Update Successfully");
+          window.location.reload();
+       Display();
+          cleardata();
+
+
+      }
+    //==================Get Topic DropDown===============
+    const GetTopic=async()=>{
+
+             const response = await fetch("/Developer/Topic/GetTopic");
+             const topic = await response.json();
+           
+             var data="<option selected disabled>-- Select Topic--<option> "
+             topic.forEach(function(d,k){
+
+                  data+="<option value="+d.topicId+">"+d.topicName+"</option>"
+             });
+             document.getElementById("ddtopic").innerHTML=data;
+    }
+    GetTopic();
+
+    //============================AddContent================================================
+    const AddTopicContent=async()=>{
+        debugger;
+        var st={
+            "TopicId":document.getElementById("ddtopic").value,
+            "ContentName":document.getElementById("txtcontent").value,
+            "ContentDescription":document.getElementById("txtdes").value
+        };
+        const response= await fetch("/Developer/TopicContent/AddContent",{
+            method:'post',
+            body:JSON.stringify(st),
+            headers:{
+                'content-type':'application/json'
+            }
+        })
+        const content=  await response.json();
+   
+        alert("Contnet Added Successfully");
+        window.location.reload();
+     Display();
+        cleardata();
+    }
+    //====================================DisplayContent ============================================
+
+   const Display=async()=>{
+         const response = await fetch("/Developer/TopicContent/GetTopicContents");
+        const contents= await response.json();
+        console.log(contents);
+        var data="";
+         contents.forEach(function(d,k){
+                         data+="<tr><td>"+(k+1)+"</td><td>"+d.contentName+"</td><td>"+d.topicName+"</td><td>"+d.contentDescription+"</td><td><input type='button' value='View' class='btn btn-info' onclick='EditData("+d.contentId+")'/>    &nbsp;<input type='button' value='Delete' class='btn btn-danger' onclick='DeleteData("+d.contentId+")'/></td>></tr>";
+
+         })
+          document.getElementById("tbldata").innerHTML=data;
+
+
+   }
+    Display();
+    //==========================Edit Data=====================================================
+
+         const EditData=async(id)=>{
+
+           const response = await fetch("/Developer/TopicContent/GetContnetById/"+id);
+         const content= await response.json();
+         console.log(content);
+
+              document.getElementById("txtcontnetid").value=content.contentId;
+           document.getElementById("ddtopic").value=content.topicId;       
+           document.getElementById("txtcontent").value=content.contentName;
+          document.getElementById("txtdes").value=content.contentDescription;
+                 document.getElementById("btnupdate").removeAttribute("hidden");
+           document.getElementById("btnsubmit").setAttribute("hidden","hidden");
+
+     }
+        //==================================Delete Content=====================================================
+
+               const DeleteData = async(id)=> {
+                  debugger;
+             if(confirm("Really want to delete topic")) {
+                       const response = await fetch("/Developer/TopicContent/DeleteContent/"+id,{
+                     method:'post',
+                     headers:{
+                         'content-type':'application/json'
+                     }
+                 });
+                 const deleteco= await response.json();
+                    
+                  alert("Topic Delete Successfully");
+                   Display();
+                 window.location.reload();
+             }
+         }
+
+    //=====================================ClearData=========================================
+    const clearData=()=>{
+
+        document.getElementById("btnsubmit").removeAttribute("hidden")
+        document.getElementById("btnupdate").setAttribute("hidden","hidden")
+    }
+    clearData();
+</script>
