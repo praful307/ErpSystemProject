@@ -2,63 +2,68 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/DeveloperLayout.cshtml";
 }
-
-<div class="container-fluid">
+<div class="container-fluid py-2" style="background-color:white ;">
     <div class="row justify-content-center">
-        <div class="col-md-11">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center" style="color:darkblue">Add Course Fees</h3>
+        <div class="col-md-12 col-lg-12">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header text-center  bg-gradient text-white rounded-top-4 " style="background-color:navy">
+                    <h3 class="fw-semibold mb-0"><i class="bi bi-cash-stack me-2"></i>Add Course Fees</h3>
                 </div>
-                <div class="card-body">
+                <div class="card-body px-5 py-4">
 
-                    <!-- Course Dropdown -->
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <label class="form-label mb-1 fw-bold" style="color:darkblue;">Course:</label>
-                            <select id="ddcourse" class="form-select text-center">
-                                <option selected disabled>--Select Course--</option>
+                    <!-- Course Selection -->
+                    <div class="row g-4 mb-3">
+                        <div class="col-md-7">
+                            <label class="form-label fw-bold text-primary mb-1">Course</label>
+                            <select id="ddcourse" class="form-select shadow-sm text-center" onchange="GetCourseByCode()">
+                                <option selected disabled>-- Select Course --</option>
                             </select>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label fw-bold text-primary mb-1">Course Code</label>
+                            <input type="text" class="form-control shadow-sm text-center" id="txtcode" disabled />
                         </div>
                     </div>
 
-                    <!-- Course Details Row -->
-                    <div class="row g-3">
-                        <!-- g-3 adds spacing between columns -->
-                        <div class="col-md-3">
-                            <label class="form-label mb-1 fw-bold" style="color:darkblue;">Course Code:</label>
-                            <input type="text" class="form-control" />
-                        </div>
-
-                        <div class="col-md-3">
-                            <label class="form-label mb-1 fw-bold" style="color:darkblue;">Amount:</label>
-                            <input type="text" class="form-control" />
-                        </div>
-
-                        <div class="col-md-3">
-                            <br />
-                            <label class="form-label mb-1 fw-bold" style="color:darkblue;">Mode:</label>
-                            <div class="form-check form-check-inline">
-                                @Html.RadioButton("rdmode", "Lumsum", new { @class = "form-check-input"})
-                                <label class="form-check-label" for="rdLumsum">Lumsum</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                @Html.RadioButton("rdmode", "Instolment", new { @class = "form-check-input" })
-                                <label class="form-check-label" for="rdInstolment">Instolment</label>
+                    <!-- Fees Details -->
+                    <div class="row g-4 align-items-center mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold text-primary mb-1">Amount</label>
+                            <div class="input-group shadow-sm">
+                                <span class="input-group-text bg-light"><i class="bi bi-currency-rupee"></i></span>
+                                <input type="text" class="form-control" id="txtamount" placeholder="Enter Amount">
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <label class="form-label mb-1 fw-bold" style="color:darkblue;">GST:</label>
-                            <input type="text" class="form-control" value="18%" disabled />
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold text-primary mb-1">Mode</label>
+                            <div class="d-flex gap-3 mt-1">
+                                <div class="form-check">
+                                    @Html.RadioButton("rdmode", "Lumsum", new { @class = "form-check-input", @id = "rdLumsum" })
+                                    <label class="form-check-label" for="rdLumsum">Lumsum</label>
+                                </div>
+                                <div class="form-check">
+                                    @Html.RadioButton("rdmode", "Instolment", new { @class = "form-check-input", @id = "rdInstolment" })
+                                    <label class="form-check-label" for="rdInstolment">Instalment</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold text-primary mb-1">GST</label>
+                            <div class="input-group shadow-sm">
+                                <span class="input-group-text bg-light"><i class="bi bi-percent"></i></span>
+                                <input type="text" class="form-control text-center" value="18%" disabled id="txtgst">
+                            </div>
                         </div>
                     </div>
 
                     <!-- Save Button -->
-                    <div class="row mt-4">
-                        <div class="col text-center">
-                            <button type="button" class="btn btn-info px-4 shadow-sm">Save</button>
-                        </div>
+                    <div class="text-center mt-4">
+                        <button type="button" class="btn btn-success px-5 py-2 rounded-pill shadow-sm fw-semibold"
+                            onclick="AddCourseFees()">
+                            <i class="bi bi-save me-2"></i>Save Fees
+                        </button>
                     </div>
 
                 </div>
@@ -66,3 +71,42 @@
         </div>
     </div>
 </div>
+
+<script>
+   const GetCourse=async()=>{
+       const response = await fetch("/Developer/Course/GetCourses");
+       const course= await response.json();
+     /*   console.log(course) */;
+        var data="<option selected disabled>--Select Course</option>"
+        course.forEach(function(d,k){
+             data+="<option value="+d.courseId+">"+d.courseName+"</option>"
+        })
+         document.getElementById("ddcourse").innerHTML=data;
+
+   }
+   GetCourse();
+    // const AddCourseFees=async()=>{
+    //     var st={
+    //           "FeesMode":document.getElementById("rdmode").value;
+    //             "FeesAmount":document.getElementById("txtamount").value;
+    //             "Gst":document.getElementById("txtgst").value;
+    //     }
+    // }
+
+  var CourseName="";
+   const GetCourseByCode=async()=>{
+       debugger;
+        var cid=document.getElementById("ddcourse").value;
+          const response= await fetch("/Developer/Course/GetCourseById/"+cid,{
+             method:'get',
+             headers:{
+                 "content-type":'application/json'
+             }
+         });
+         const courseget= await response.json();
+         console.log(courseget);
+            document.getElementById("txtcode").value=courseget.courseCode;
+   }
+            
+    
+</script>

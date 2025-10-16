@@ -1,4 +1,5 @@
-﻿using ErpSystem_Services.Interface;
+﻿using ErpSystem_Models;
+using ErpSystem_Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ErpSystemProject.Areas.Developer.Controllers
@@ -14,6 +15,11 @@ namespace ErpSystemProject.Areas.Developer.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+        public JsonResult AddCourseFees([FromBody] CourseFeesModel cf)
+        {
+            courseFeesService.AddCourseFees(cf);
+            return Json(cf);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace ErpSystem_Services.Implementation
                     cmd.Parameters.AddWithValue("@FeesMode",fees.FeesMode);
                     cmd.Parameters.AddWithValue("@FeesAmount",fees.FeesAmount);
                     cmd.Parameters.AddWithValue("@Gst", fees.Gst);
-                    cmd.Parameters.AddWithValue("@@CourseId", fees.CourseId);
+                    cmd.Parameters.AddWithValue("@CourseId", fees.CourseId);
                     
                 }
             }
@@ -47,7 +47,7 @@ namespace ErpSystem_Services.Implementation
             }
         }
 
-        public Task<List<CourseFeesModel>> GetAllCoursesFees()
+        public List<CourseFeesModel> GetAllCoursesFees()
         {List<CourseFeesModel> lst= new List<CourseFeesModel>();
             using (SqlConnection con= new SqlConnection(ConnectionString.Connection))
             {
@@ -65,7 +65,7 @@ namespace ErpSystem_Services.Implementation
                         string courseDes=dr["Description"].ToString();
                         string feesMode= dr["FeesMode"].ToString();
                         float feesAmount = (float)Convert.ToDouble(dr["FeesAmount"].ToString());
-                        float gst = (float)Convert.ToDouble(dr["Gst"].ToString());
+                        string gst = dr["Gst"].ToString();
                         CourseFeesModel cf = new CourseFeesModel()
                         {
                             FeesId = feesid,
@@ -82,10 +82,10 @@ namespace ErpSystem_Services.Implementation
                    
                 }
             }  
-            return Task.FromResult(lst);
+            return lst;
         }
 
-        public Task<CourseFeesModel> GetCourseFeesById(int feesId)
+        public CourseFeesModel  GetCourseFeesById(int feesId)
         {
             CourseFeesModel courseFees = null;
             using(SqlConnection con= new SqlConnection(ConnectionString.Connection))
@@ -104,7 +104,7 @@ namespace ErpSystem_Services.Implementation
                         string courseDes = dr["Description"].ToString();
                         string feesMode = dr["FeesMode"].ToString();
                         float feesAmount = (float)Convert.ToDouble(dr["FeesAmount"].ToString());
-                        float gst = (float)Convert.ToDouble(dr["Gst"].ToString());
+                        string gst = dr["Gst"].ToString();
 
                         courseFees = new CourseFeesModel()
                         {
@@ -121,7 +121,7 @@ namespace ErpSystem_Services.Implementation
                 }
                 
             }
-            return Task.FromResult(courseFees);
+            return courseFees;
 
         }
 
@@ -156,8 +156,9 @@ namespace ErpSystem_Services.Implementation
                     cmd.Parameters.AddWithValue("@Action", "update");
                     cmd.Parameters.AddWithValue("@FeesId", fees.FeesId);
                     cmd.Parameters.AddWithValue("@FeesMode", fees.FeesMode);
-                    cmd.Parameters.AddWithValue("@FeesAmount", "insert");
-                    cmd.Parameters.AddWithValue("@Action", "insert");
+                    cmd.Parameters.AddWithValue("@FeesAmount", fees.FeesAmount);
+                    cmd.Parameters.AddWithValue("@Gst", fees.Gst);
+                   
 
                 }
             }

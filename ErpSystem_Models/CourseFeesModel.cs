@@ -11,7 +11,7 @@ namespace ErpSystem_Models
         public int FeesId { get; set; }
         public string FeesMode { get; set; }
         public float FeesAmount { get; set; }
-        public float Gst { get; set; }
+        public string Gst { get; set; }
         public int CourseId { get; set; }
         public string CourseName { get; set; }
         public string Description { get; set; }
