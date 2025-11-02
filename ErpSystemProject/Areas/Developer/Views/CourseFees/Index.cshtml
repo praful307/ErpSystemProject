@@ -1,0 +1,176 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/DeveloperLayout.cshtml";
+}
+<div class="container-fluid py-2" style="background-color:white ;">
+    <div class="row justify-content-center">
+        <div class="col-md-12 col-lg-12">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header text-center  bg-gradient text-white rounded-top-4 " style="background-color:navy">
+                    <h3 class="fw-semibold mb-0"><i class="bi bi-cash-stack me-2"></i>Add Course Fees</h3>
+                </div>
+                <div class="card-body px-5 py-4">
+
+                   
+                    <div class="row g-4 mb-3">
+                        <div class="col-md-7">
+                            <label class="form-label fw-bold text-primary mb-1">Course</label>
+                            <select id="ddcourse" class="form-select shadow-sm text-center" onchange="GetCourseByCode()">
+                                <option selected disabled>-- Select Course --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label fw-bold text-primary mb-1">Course Code</label>
+                            <input type="text" class="form-control shadow-sm text-center" id="txtcode" disabled />
+                        </div>
+                    </div>
+
+                 
+                    <div class="row g-4 align-items-center mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold text-primary mb-1">Amount</label>
+                            <div class="input-group shadow-sm">
+                                <span class="input-group-text bg-light"><i class="bi bi-currency-rupee"></i></span>
+                                <input type="text" class="form-control" id="txtamount" placeholder="Enter Amount">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold text-primary mb-1">Mode</label>
+                            <div class="d-flex gap-3 mt-1">
+                                <div class="form-check">
+                                    @Html.RadioButton("rdmode", "Lumsum", new { @class = "form-check-input", @id = "rdmode_lumsam" })
+                                    <label class="form-check-label" for="rdmode_lumsam">Lumsum</label>
+                                </div>
+                                <div class="form-check">
+                                    @Html.RadioButton("rdmode", "Instolment", new { @class = "form-check-input", @id = "rdmode_instolment" })
+                                    <label class="form-check-label" for="rdmode_instolment">Instalment</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold text-primary mb-1">GST</label>
+                            <div class="input-group shadow-sm">
+                                <span class="input-group-text bg-light"><i class="bi bi-percent"></i></span>
+                                <input type="text" class="form-control text-center" value="18%" disabled id="txtgst">
+                            </div>
+                        </div>
+                    </div>
+
+                 
+                    <div class="text-center mt-4">
+                        <button type="button" class="btn btn-success px-5 py-2 rounded-pill shadow-sm fw-semibold"
+                            onclick="AddCourseFees()">
+                            <i class="bi bi-save me-2"></i>Save Fees
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center my-3">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#courseFeesTableModal">
+            <i class="bi bi-table"></i> View Course Fees
+        </button>
+    </div>
+    </div>
+
+    <div class="modal fade" id="courseFeesTableModal" tabindex="-1" aria-labelledby="courseFeesTableLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content rounded-4">
+                <div class="modal-header text-white" style="background-color:navy">
+                    <h5 class="modal-title" id="courseFeesTableLabel"><i class="bi bi-table me-2"></i>Course Fees List</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped mb-0 text-center align-middle">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Sr.No</th>
+                                    <th>Course</th>
+                                    <th>Course Fees</th>
+                                    <th>GST</th>
+                                    <th>Fees Mode</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbldataModal"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+   const GetCourse=async()=>{
+       const response = await fetch("/Developer/Course/GetCourses");
+       const course= await response.json();
+
+        var data="<option selected disabled>--Select Course</option>"
+        course.forEach(function(d,k){
+             data+="<option value="+d.courseId+">"+d.courseName+"</option>"
+        })
+         document.getElementById("ddcourse").innerHTML=data;
+
+   }
+   GetCourse();
+  const AddCourseFees=async()=>{
+      debugger;
+      var st={
+            "CourseId":document.getElementById("ddcourse").value,
+             "FeesAmount":document.getElementById("txtamount").value,
+             "FeesMode":document.getElementsByName("rdmode").value,
+             "Gst":document.getElementById("txtgst").value               
+
+      }
+            const response= await fetch("/Developer/CourseFees/AddCourseFees",{
+              method:'post',
+              body:JSON.stringify(st),
+              headers: { 'content-type': 'application/json' }
+          });
+          const cofees = await response.json();
+       
+          alert("Courses Fess Added Successfully");
+          window.location.reload();         
+
+
+      
+     
+  }
+
+ const GetCourseFess=async()=>{
+     debugger;
+           const response = await fetch("/Developer/CourseFees/GetCourseFees");
+           const co= await response.json();
+           console.log(co);
+           var data="";
+           co.forEach(function(d,k){
+                       data+="<tr><td>"+(k+1)+"</td><td>"+d.courseName+"</td><td>"+d.feesAmount+"</td><td>"+d.gst+"</td><td>"+d.feesMode+"</td><td><input type='button' value='View' class='btn btn-info' onclick='EditData("+d.feesId+")'/>    &nbsp;<input type='button' value='Delete' class='btn btn-danger' onclick='DeleteData("+d.feesId+")'/></td></tr>"
+
+           })
+              document.getElementById("tbldataModal").innerHTML=data;
+          
+ }
+    GetCourseFess();
+   const GetCourseByCode=async()=>{
+    
+        var cid=document.getElementById("ddcourse").value;
+          const response= await fetch("/Developer/Course/GetCourseById/"+cid,{
+             method:'get',
+             headers:{
+                 "content-type":'application/json'
+             }
+         });
+         const courseget= await response.json();        
+         console.log(courseget);
+            document.getElementById("txtcode").value=courseget.courseCode;
+   }
+            
+    
+</script>

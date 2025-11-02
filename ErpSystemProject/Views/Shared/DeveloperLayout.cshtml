@@ -1,0 +1,196 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DeveloperLayout</title>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .list-group-item {
+            border: none;
+            border-left: 5px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+            .list-group-item:hover {
+                background-color: #e9ecef;
+                border-left: 5px solid #0d6efd;
+                color: #0d6efd;
+            }
+
+            .list-group-item.active {
+                background-color: #0d6efd;
+                color: white;
+                border-left: 5px solid #084298;
+            }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+
+        footer {
+            font-size: 0.9rem;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+        }
+
+            .btn-danger:hover {
+                background-color: #bb2d3b;
+            }
+
+        /* Custom style to reduce size of Login button */
+        .btn-light.btn-sm {
+            font-size: 0.8rem; /* Reduce font size */
+            padding: 6px 12px; /* Reduce padding */
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:navy;>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><i class="bi bi-tools"></i> ERP Developer</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Dashboard/Index" title="Home">
+                            <i class="bi bi-house-door me-1"></i> Home
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Overview/Index" title="Overview">
+                            <i class="bi bi-grid me-1"></i> Overview
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Alerts/Index" title="Alerts">
+                            <i class="bi bi-bell-fill me-1"></i> Alerts
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Reports/Index" title="Reports">
+                            <i class="bi bi-bar-chart-line-fill me-1"></i> Reports
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ContactUs/Index" title="Contact Us">
+                            <i class="bi bi-envelope-fill me-1"></i> Contact Us
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/AboutUs/Index" title="About Us">
+                            <i class="bi bi-info-circle-fill me-1"></i> About Us
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Settings/Index" title="Settings">
+                            <i class="bi bi-gear-fill me-1"></i> Settings
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+
+
+                    <li class="nav-item">
+                        <span class="nav-link text-white">
+                            <i class="bi bi-person-circle"></i> @User.Identity.Name
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <form method="post" action="/Account/LogOut" class="d-inline">
+                            <button type="submit" class="btn btn-light btn-sm ms-2">Logout</button>
+                        </form>
+                    </li>
+
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Register"><i class="bi bi-person-plus"></i> Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Login"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-md-3 col-lg-2">
+                <div class="list-group shadow-sm bg-white rounded ">
+                    <a href="/Technology/Index" class="list-group-item list-group-item-action text-light " style="background-color:navy"><i class="bi bi-cpu"></i> Technology</a>
+                    <a href="/Developer/Course/Index" class="list-group-item list-group-item-action"><i class="bi bi-book"></i> Training Courses</a>
+                     <a href="/Developer/CourseFees/Index" class="list-group-item list-group-item-action"><i class="bi bi-cash-coin"></i> Course Fees</a>
+                    <a href="/Developer/Topic/Index" class="list-group-item list-group-item-action"><i class="bi bi-list-task"></i>  Topics</a>
+                    <a href="/Developer/TopicContent/Index" class="list-group-item list-group-item-action"><i class="bi bi-file-earmark-text"></i> Topic Content</a>                   
+                    <a href="/Developer/CourseTopic/Index" class="list-group-item list-group-item-action"><i class="bi bi-diagram-3"></i> Course Topic</a>
+                    <a href="/Developer/ContentQuestion/Index" class="list-group-item list-group-item-action"><i class="bi bi-question-octagon-fill"></i> Content Questions</a>
+                    <a href="/Developer/QuestionLevel/Index" class="list-group-item list-group-item-action"><i class="bi bi-graph-up-arrow"></i> Question Levels</a>
+                    <a href="/FeeMode/Index" class="list-group-item list-group-item-action"><i class="bi bi-credit-card"></i> Fee Mode</a>
+                    <a href="/ContentInterviewQuestions/Index" class="list-group-item list-group-item-action"><i class="bi bi-chat-left-text"></i> Interview Questions</a>
+                    <a href="/ContentProgramQuestion/Index" class="list-group-item list-group-item-action"><i class="bi bi-code-slash"></i> Program Questions</a>
+                    <a href="/ContentProgramAnswer/Index" class="list-group-item list-group-item-action"><i class="bi bi-terminal"></i> Program Answer</a>
+                    <a href="/Project/Index" class="list-group-item list-group-item-action"><i class="bi bi-kanban"></i> Projects</a>
+                    <a href="/ProjectChecklists/Index" class="list-group-item list-group-item-action"><i class="bi bi-ui-checks-grid"></i> Project Checklists</a>
+                </div>
+            </div>
+
+            <div class="col-md-9 col-lg-10">
+                <div class="p-3 bg-white shadow-sm rounded">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer style="background-color:navy; color:white;" class="text-center p-3 mt-5">
+        <p class="mb-0">&copy; 2025 ERP Developer Module | All Rights Reserved</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

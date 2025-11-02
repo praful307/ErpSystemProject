@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/DeveloperLayout.cshtml";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+
+<div class="container-fluid py-2" style="background-color:white;">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-10">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header text-center  bg-gradient text-white rounded-top-4" style="background-color:navy">
+                    <h3 class="fw-semibold mb-0"><i class="bi bi-journal-text me-2"></i>Add Topic</h3>
+                </div>
+
+                <div class="card-body px-5 py-4">
+             
+                    @Html.Hidden("txtquetionid")
+
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold text-primary mb-1">Content</label>
+                            <select id="ddcontent" class="form-select shadow-sm text-center">
+                                <option selected disabled>-- Select Content --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-9">
+                            <label class="form-label fw-bold text-primary mb-1">Question</label>
+                            @Html.TextBox("txtquestion", null, new { @class = "form-control  text-center", placeholder = "Enter Question" })
+
+                        </div>
+                   
+                    </div>
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold text-primary mb-1">Option A</label>
+                            @Html.TextBox("txtoptiona", null, new { @class = "form-control  text-center", placeholder = " Option A" })
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold text-primary mb-1">Option B</label>
+                            @Html.TextBox("txtoptionb", null, new { @class = "form-control  text-center", placeholder = "Option B" })
+
+                        </div>
+
+                    </div>
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold text-primary mb-1">Option C</label>
+                            @Html.TextBox("txtoptionc", null, new { @class = "form-control  text-center", placeholder = "Option C" })
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold text-primary mb-1">Option D</label>
+                            @Html.TextBox("txtoptiond", null, new { @class = "form-control  text-center", placeholder = "Option D" })
+
+                        </div>
+                      
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <div class="col-md-3 justify-content-end">
+                            <label class="form-label fw-bold text-primary mb-1">Correct Answer </label>
+                            @Html.TextBox("txtoptiond", null, new { @class = "form-control  text-center", placeholder = "Enter Correct Option " })
+
+                        </div>
+
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="button" class="btn btn-success px-4 py-2 rounded-pill shadow-sm fw-semibold me-2" id="btnsubmit" onclick="addtopic()">
+                            <i class="bi bi-check2-circle me-2"></i>Submit
+                        </button>
+                        <button type="button" class="btn btn-info px-4 py-2 rounded-pill shadow-sm fw-semibold" id="btnupdate" onclick="updatetopic()">
+                            <i class="bi bi-arrow-repeat me-2"></i>Update
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        const GetContet=async()=>{
+
+        const response = await fetch("/Developer/TopicContent/GetTopicContents");
+        const Content= await response.json();
+        console.log(Content);
+           var data="<option selected disabled>-- Select Content --</option>";
+           Content.forEach(function(d,k){
+                   data+="<option value="+d.contentId+">"+d.contentName+" </option>"
+
+           })
+           document.getElementById("ddcontent").innerHTML=data;
+        }
+    GetContet();
+    </script>
