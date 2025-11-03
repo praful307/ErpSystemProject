@@ -39,12 +39,12 @@
                             <label class="form-label fw-bold text-primary mb-1">Mode</label>
                             <div class="d-flex gap-3 mt-1">
                                 <div class="form-check">
-                                    @Html.RadioButton("rdmode", "Lumsum", new { @class = "form-check-input", @id = "rdmode_lumsam" })
-                                    <label class="form-check-label" for="rdmode_lumsam">Lumsum</label>
+                                    <input type="radio" name="rdmode" id="rdmode_lumsum" class="form-check-input" value="Lumsum">
+                                    <label class="form-check-label" for="rdmode_lumsum">Lumsum</label>
                                 </div>
                                 <div class="form-check">
-                                    @Html.RadioButton("rdmode", "Instolment", new { @class = "form-check-input", @id = "rdmode_instolment" })
-                                    <label class="form-check-label" for="rdmode_instolment">Instalment</label>
+                                    <input type="radio" name="rdmode" id="rdmode_instalment" class="form-check-input" value="Instolment">
+                                    <label class="form-check-label" for="rdmode_instalment">Instalment</label>
                                 </div>
                             </div>
                         </div>
@@ -122,10 +122,11 @@
    GetCourse();
   const AddCourseFees=async()=>{
       debugger;
+    var selectFees=document.querySelector('input[name="rdmode"]:checked');
       var st={
             "CourseId":document.getElementById("ddcourse").value,
              "FeesAmount":document.getElementById("txtamount").value,
-             "FeesMode":document.getElementsByName("rdmode").value,
+                "FeesMode":selectFees,
              "Gst":document.getElementById("txtgst").value               
 
       }
@@ -145,7 +146,7 @@
   }
 
  const GetCourseFess=async()=>{
-     debugger;
+
            const response = await fetch("/Developer/CourseFees/GetCourseFees");
            const co= await response.json();
            console.log(co);
