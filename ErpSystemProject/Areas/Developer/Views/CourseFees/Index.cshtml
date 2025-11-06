@@ -6,9 +6,15 @@
     <div class="row justify-content-center">
         <div class="col-md-12 col-lg-12">
             <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-header text-center  bg-gradient text-white rounded-top-4 " style="background-color:navy">
+                <div class="card-header   bg-gradient text-white rounded-top-2 " style="background-color:navy">
                     <h3 class="fw-semibold mb-0"><i class="bi bi-cash-stack me-2"></i>Add Course Fees</h3>
+                    <div class="col text-end">
+                        <a href="/Developer/CourseFees/DisplayCourseFees" class="btn text-white px-4 py-2 shadow-sm rounded-pill" style="background-color: rebeccapurple;">
+                            <i class="bi bi-table me-2"></i> View Course Fees
+                        </a>
+                    </div>
                 </div>
+       
                 <div class="card-body px-5 py-4">
 
                    
@@ -71,7 +77,7 @@
         </div>
     </div>
 
-    <div class="text-center my-3">
+ @*    <div class="text-center my-3">
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#courseFeesTableModal">
             <i class="bi bi-table"></i> View Course Fees
         </button>
@@ -104,6 +110,7 @@
                 </div>
             </div>
         </div>
+        *@
     </div>
 
 
@@ -122,15 +129,19 @@
    GetCourse();
   const AddCourseFees=async()=>{
       debugger;
-    var selectFees=document.querySelector('input[name="rdmode"]:checked');
+       const selectedMode = document.querySelector('input[name="rdmode"]:checked');
+       if (!selectedMode) {
+           alert("Please select a Fees Mode!");
+           return;
+       }
       var st={
             "CourseId":document.getElementById("ddcourse").value,
              "FeesAmount":document.getElementById("txtamount").value,
-                "FeesMode":selectFees,
+                      "FeesMode":selectedMode.value,
              "Gst":document.getElementById("txtgst").value               
 
       }
-            const response= await fetch("/Developer/CourseFees/AddCourseFees",{
+            const response= await fetch("/Developer/CourseFees/AddCourseFee",{
               method:'post',
               body:JSON.stringify(st),
               headers: { 'content-type': 'application/json' }
@@ -145,20 +156,7 @@
      
   }
 
- const GetCourseFess=async()=>{
 
-           const response = await fetch("/Developer/CourseFees/GetCourseFees");
-           const co= await response.json();
-           console.log(co);
-           var data="";
-           co.forEach(function(d,k){
-                       data+="<tr><td>"+(k+1)+"</td><td>"+d.courseName+"</td><td>"+d.feesAmount+"</td><td>"+d.gst+"</td><td>"+d.feesMode+"</td><td><input type='button' value='View' class='btn btn-info' onclick='EditData("+d.feesId+")'/>    &nbsp;<input type='button' value='Delete' class='btn btn-danger' onclick='DeleteData("+d.feesId+")'/></td></tr>"
-
-           })
-              document.getElementById("tbldataModal").innerHTML=data;
-          
- }
-    GetCourseFess();
    const GetCourseByCode=async()=>{
     
         var cid=document.getElementById("ddcourse").value;

@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "DisplayCourseFees";
+    Layout = "~/Views/Shared/DeveloperLayout.cshtml";
+}
+<div class="col-md-12 mb-3">
+    <div class="row">
+        <div class="col text-end">
+            <a href="/Developer/CourseFees/Index" class="btn text-white px-4 py-2 shadow-sm rounded-pill" style="background-color: navy;">
+                <i class="bi bi-plus-circle me-2"></i> Add Course Fees
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal-header text-white" style="background-color:navy">
+    <h5 class="modal-title" id="courseFeesTableLabel"><i class="bi bi-table me-2"></i>Course Fees List</h5>
+
+    <div class="row flex-shrink-0 mb-1">
+        <div class="col-md-10 mx-auto">
+            <br />
+            <div class="input-group shadow-sm rounded-pill">
+              @*   <span class="input-group-text  text-white rounded-start-pill" style="background-color:plum">
+                    <i class="bi bi-search"></i>
+                </span>
+                <input type="text" class="form-control rounded-end-pill" id="txtserch" placeholder="Search courses here..."> *@
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<div class="table-responsive">
+
+    <table class="table table-bordered table-striped mb-0 text-center align-middle">
+        <thead class="table-primary">
+            <tr>
+                <th>Sr.No</th>
+                <th>Course</th>
+                <th>Course Fees</th>
+                <th>GST</th>
+                <th>Fees Mode</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="tbldataModal"></tbody>
+    </table>
+</div>
+<script>
+    const GetCourseFess=async()=>{
+
+              const response = await fetch("/Developer/CourseFees/GetCourseFees");
+              const co= await response.json();
+              console.log(co);
+              var data="";
+              co.forEach(function(d,k){
+                          data+="<tr><td>"+(k+1)+"</td><td>"+d.courseName+"</td><td>"+d.feesAmount+"</td><td>"+d.gst+"</td><td>"+d.feesMode+"</td><td><input type='button' value='View' class='btn btn-info' onclick='EditData("+d.feesId+")'/>    &nbsp;<input type='button' value='Delete' class='btn btn-danger' onclick='DeleteData("+d.feesId+")'/></td></tr>"
+
+              })
+                 document.getElementById("tbldataModal").innerHTML=data;
+
+    }
+    GetCourseFess();
+</script>
+

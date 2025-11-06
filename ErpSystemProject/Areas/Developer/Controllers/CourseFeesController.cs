@@ -17,7 +17,7 @@ namespace ErpSystemProject.Areas.Developer.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult AddCourseFees([FromBody] CourseFeesModel cf)
+        public JsonResult AddCourseFee([FromBody] CourseFeesModel cf)
         {
             courseFeesService.AddCourseFees(cf);
             return Json(cf);
@@ -26,6 +26,10 @@ namespace ErpSystemProject.Areas.Developer.Controllers
         {
             var cf = courseFeesService.GetAllCoursesFees();
             return Json(cf);
+        }
+        public IActionResult DisplayCourseFees()
+        {
+            return View();
         }
     }
 }
